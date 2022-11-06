@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:40 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/06 06:43:29 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/06 07:10:18 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ char	*fill_line(char *buffer)
 	
 	index = 0;
 	while (buffer[index] && buffer[index] != '\n')
-	{
 		index++;
-	}
 	line = malloc((index + 2) * sizeof(char));
 	if (!line)
 		return (0);
@@ -46,8 +44,32 @@ char	*fill_line(char *buffer)
 		index++;
 	}
 	line[index] = '\n';
-	line[index++] = '\0';
+	line[++index] = '\0';
 	return (line);
+}
+
+char	*reset_rest(char *rest)
+{
+	int		rest_len;
+	int		index;
+	char	*tmp;
+
+	index = 0;
+	rest_len = 0;
+	while (rest[index] && rest[index] != '\n')
+		index++;
+	if (rest[index] == '\0')
+	{
+		free(rest);
+		return (0);
+	}
+	if (rest[index] == '\n')
+		index++;
+	rest_len = ft_strlen(&rest[index]);
+	tmp = ft_strdup(&rest[index]);
+	if (!tmp)
+		return (0);
+	return (tmp);
 }
 
 char	*get_next_line(int fd)
@@ -72,6 +94,7 @@ char	*get_next_line(int fd)
 			free(buffer);
 			return (0);
 		}
+		// check if read returned 0 (the file has ended)
 		else if (readed > 0)
 		{
 			rest = ft_strjoin(rest, buffer);
@@ -79,13 +102,14 @@ char	*get_next_line(int fd)
 				break;
 		}
 	}
-	printf("\n*********\n");
-	printf("----   rest  ----\n%s", rest);
-	printf("\n---- end rest ----\n");
-	printf("\n*********\n");
 	if (rest)
 	{
 		line = fill_line(rest);
+		rest = reset_rest(rest);
+	// 	printf("\n*********\n");
+	// 	printf("----   rest  ----\n%s", rest);
+	// 	printf("\n---- end rest ----\n");
+	// 	printf("\n*********\n");
 	}
 	return (line);
 }
@@ -94,7 +118,13 @@ int	main()
 {
 	int fd = open("test_file.txt", O_RDONLY);
 	char *line = get_next_line(fd);
-	printf("\n```````````````\n");
-	printf("----   line  ----\n%s", line);
-	printf("---- end line ----\n```````````````\n");
+	int	index = 1;
+	while (line)
+	{
+		printf("\n```````````````\n");
+		printf("----   line %d  ----\n%s", index, line);
+		printf("---- end line %d ----\n```````````````\n", index);
+		line = get_next_line(fd);
+		index++;
+	}
 }

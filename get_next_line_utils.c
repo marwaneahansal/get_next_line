@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 06:03:16 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/06 06:32:59 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:47:26 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (joined_str == 0)
 		return (0);
 	joined_str = join_str(joined_str, s1, s2);
+	free(s1);
 	return (joined_str);
 }
 
@@ -76,7 +77,7 @@ char	*ft_strdup(char *s1)
 	size_t	dst_len;
 
 	dst_len = ft_strlen(s1);
-	dst = (char *) malloc((dst_len + 1) * sizeof(char));
+	dst = malloc((dst_len + 1) * sizeof(char));
 	index = 0;
 	if (dst == 0)
 		return (0);

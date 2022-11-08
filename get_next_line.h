@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:42 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/06 07:45:35 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:49:33 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 42
 # endif
 
 char	*get_next_line(int fd);

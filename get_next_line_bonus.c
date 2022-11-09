@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:40 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/09 05:44:27 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/09 05:53:38 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	check_buffer_line(char *buffer)
 {
@@ -88,7 +88,7 @@ char	*get_next_line(int fd)
 	int			readed;
 	char		*buffer;
 	char		*line;
-	static char	*rest;
+	static char	*rest[1024];
 
 	if (fd < 0)
 		return (0);
@@ -105,26 +105,26 @@ char	*get_next_line(int fd)
 		if (readed == -1)
 		{
 			free(buffer);
-			if (rest && rest[0])
-				rest[0] = '\0';
+			if (rest[fd] && rest[fd][0])
+				rest[fd][0] = '\0';
 			return (0);
 		}
 		else if (readed > 0)
 		{
 			buffer[readed] = '\0';
-			rest = ft_strjoin(rest, buffer);
-			if (!rest)
+			rest[fd] = ft_strjoin(rest[fd], buffer);
+			if (!rest[fd])
 			{
 				free(buffer);
 				return (0);
 			}
-			if (!check_buffer_line(rest))
+			if (!check_buffer_line(rest[fd]))
 				break;
 		} 
 		else if (readed == 0)
 		{
-			rest = ft_strjoin(rest, buffer);
-			if (!rest)
+			rest[fd] = ft_strjoin(rest[fd], buffer);
+			if (!rest[fd])
 			{
 				free(buffer);
 				return (0);
@@ -132,10 +132,10 @@ char	*get_next_line(int fd)
 			break;
 		}
 	}
-	if (rest)
+	if (rest[fd])
 	{
-		line = fill_line(rest);
-		rest = reset_rest(rest);
+		line = fill_line(rest[fd]);
+		rest[fd] = reset_rest(rest[fd]);
 	}
 	free(buffer);
 	return (line);

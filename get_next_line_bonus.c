@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:40 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/11 06:57:25 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/11 07:12:50 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*get_next_line(int fd)
 	int			readed;
 	char		*buffer;
 	char		*line;
-	static char	*rest[1024];
+	static char	*rest[OPEN_MAX];
 
 	if (fd < 0)
 		return (0);

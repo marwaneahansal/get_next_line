@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:40 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/11 07:12:50 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/11 07:18:00 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	read_file(int fd, char **rest, char *buffer)
 		if (readed == -1)
 		{
 			free(buffer);
-			clear_rest(rest);
+			clear_rest(*rest);
 			return (0);
 		}
 		else if (readed >= 0)

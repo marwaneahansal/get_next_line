@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:40 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/09 06:01:43 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/11 06:57:25 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*fill_line(char *buffer)
 	int		index;
 	char	*line;
 	int		add_line;
-	
+
 	index = 0;
 	add_line = 0;
 	if (buffer[index] == '\0')
@@ -50,10 +50,7 @@ char	*fill_line(char *buffer)
 		index++;
 	}
 	if (add_line)
-	{
-		line[index] = '\n';
-		index++;
-	}
+		line[index++] = '\n';
 	line[index] = '\0';
 	return (line);
 }
@@ -83,6 +80,35 @@ char	*reset_rest(char *rest)
 	return (tmp);
 }
 
+int	read_file(int fd, char **rest, char *buffer)
+{
+	int		readed;
+
+	readed = 1;
+	while (readed > 0 && check_buffer_line(buffer))
+	{
+		buffer[0] = '\0';
+		readed = read(fd, buffer, BUFFER_SIZE);
+		if (readed == -1)
+		{
+			free(buffer);
+			clear_rest(rest);
+			return (0);
+		}
+		else if (readed >= 0)
+		{
+			if (readed > 0)
+				buffer[readed] = '\0';
+			*rest = ft_strjoin(*rest, buffer);
+			if (!(*rest))
+				return (0);
+			if (readed > 0 && !check_buffer_line(*rest))
+				break ;
+		}
+	}
+	return (1);
+}
+
 char	*get_next_line(int fd)
 {
 	int			readed;
@@ -98,46 +124,14 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (0);
 	buffer[0] = '\0';
-	while (readed > 0 && check_buffer_line(buffer) != 0)
-	{
-		buffer[0] = '\0';
-		readed = read(fd, buffer, BUFFER_SIZE);
-		if (readed == -1)
-		{
-			free(buffer);
-			if (rest[fd] && rest[fd][0])
-				rest[fd][0] = '\0';
-			return (0);
-		}
-		else if (readed > 0)
-		{
-			buffer[readed] = '\0';
-			rest[fd] = ft_strjoin(rest[fd], buffer);
-			if (!rest[fd])
-			{
-				free(buffer);
-				return (0);
-			}
-			if (!check_buffer_line(rest[fd]))
-				break;
-		} 
-		else if (readed == 0)
-		{
-			rest[fd] = ft_strjoin(rest[fd], buffer);
-			if (!rest[fd])
-			{
-				free(buffer);
-				return (0);
-			}
-			break;
-		}
-	}
+	if (!read_file(fd, &rest[fd], buffer))
+		return (0);
+	free(buffer);
 	if (rest[fd])
 	{
 		line = fill_line(rest[fd]);
 		rest[fd] = reset_rest(rest[fd]);
 	}
-	free(buffer);
 	return (line);
 }
 

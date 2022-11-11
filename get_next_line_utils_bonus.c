@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/06 06:03:16 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/09 05:49:36 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/11 06:48:05 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,10 @@ char	*ft_strdup(char *s1)
 	}
 	dst[index] = '\0';
 	return (dst);
+}
+
+void	clear_rest(char **rest)
+{
+	if (*rest && *rest[0])
+		*rest[0] = '\0';
 }

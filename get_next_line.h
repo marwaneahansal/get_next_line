@@ -6,15 +6,12 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:42 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/11 07:16:56 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/12 02:24:27 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-# include <stdio.h>
-# include <fcntl.h>
 
 # include <unistd.h>
 # include <stdlib.h>

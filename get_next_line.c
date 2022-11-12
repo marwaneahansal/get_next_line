@@ -6,7 +6,7 @@
 /*   By: mahansal <mahansal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 06:53:40 by mahansal          #+#    #+#             */
-/*   Updated: 2022/11/11 07:17:02 by mahansal         ###   ########.fr       */
+/*   Updated: 2022/11/12 02:24:11 by mahansal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*fill_line(char *buffer)
 
 char	*reset_rest(char *rest)
 {
-	int		rest_len;
+	size_t	rest_len;
 	int		index;
 	char	*tmp;
 
@@ -132,43 +132,3 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-
-// void	printf_line(char *line, int index)
-// {
-// 	printf("\n```````````````\n");
-// 	printf("----   line %d  ----\n%s", index, line);
-// 	printf("---- end line %d  ----\n```````````````\n", index);
-// }
-
-// int main()
-// {
-// 	int fd = open("./files/empty_file.txt", O_RDONLY);
-// 	int index = 1;
-// 	printf_line(get_next_line(fd), index++);
-// 	printf_line(get_next_line(fd), index++);
-// 	close(fd);
-// 	printf_line(get_next_line(fd), index++);
-// 	printf_line(get_next_line(fd), index++);
-// 	fd = open("./files/open_close_open.txt", O_RDONLY);
-// 	printf_line(get_next_line(fd), index++);
-// }
-
-// int	main()
-// {
-// 	int fd = open("./files/test_file.txt", O_RDONLY);
-// 	// int fd = open("./files/empty_file.txt", O_RDONLY);
-// 	printf("fd: %d\n", fd);
-// 	char *line = get_next_line(fd);
-// 	int	index = 1;
-// 	printf("\n```````````````\n");
-// 	printf("----   line %d  ----\n%s", index, line);
-// 	printf("---- end line %d ----\n```````````````\n", index);
-// 	while (line)
-// 	{
-// 		index++;
-// 		line = get_next_line(fd);
-// 		printf("\n```````````````\n");
-// 		printf("----   line %d  ----\n%s", index, line);
-// 		printf("---- end line %d ----\n```````````````\n", index);
-// 	}
-// }
